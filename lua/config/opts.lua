@@ -6,8 +6,9 @@ vim.o.smartindent = true -- Enables better indenting
 vim.o.undofile = true -- Enables undo history
 vim.o.scrolloff = 7 -- Minimal number of lines to keep above and below the cursor
 vim.o.signcolumn = "yes" -- Reduce the flickering when lsp warnings appear
-vim.o.listchars = "nbsp:+,eol:↴" -- Shows end of line character
+vim.opt.listchars = { nbsp = "+", eol = "↴" } -- Shows end of line character
 vim.o.list = true -- Shows listchars
+vim.opt.fillchars = { fold = " ", eob = " " } -- Cleaner fold look
 
 -- Better search
 vim.o.ignorecase = true -- Ignore case in search
