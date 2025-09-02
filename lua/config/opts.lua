@@ -32,7 +32,7 @@ vim.keymap.set({ "n", "v" }, "-", ":Oil<CR>", { silent = true, desc = "Oil" })  
 vim.keymap.set({ "n" }, "<Esc>", ":noh<CR>", { silent = true, desc = "Clear highlights" }) -- Clears highlightings on Esc
 vim.keymap.set("n", "<leader>=", function()
     require("conform").format()
-end, { silent = true, desc = "Format current buffer" }) -- Formats current buffer
+end, { silent = true, desc = "Format current buffer" }) -- Formats current buffer on <leader>=
 
 -- Autocommands
 
