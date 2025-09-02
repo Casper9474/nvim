@@ -20,6 +20,10 @@ vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a T
 vim.o.shiftwidth = 0   -- Number of spaces inserted when indenting
 vim.o.softtabstop = -1 -- Number of spaces inserted instead of a TAB character
 
+-- Folding options
+vim.o.foldlevel = 99        -- Open all fold by default
+vim.o.foldmethod = "indent" -- Better folding
+
 -- Diagnostics
 vim.diagnostic.config({
     virtual_text = true,
