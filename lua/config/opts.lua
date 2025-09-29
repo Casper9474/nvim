@@ -70,6 +70,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local bufnr = args.buf
 
+        local filetype = vim.bo[bufnr].filetype
+        local disable = {"cmake"}
+        if vim.tbl_contains(disable, filetype) then
+            return
+        end
+
         vim.api.nvim_create_autocmd({ "CursorHold" }, {
             buffer = bufnr,
             callback = function()
