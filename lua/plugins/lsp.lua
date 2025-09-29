@@ -54,6 +54,7 @@ local servers = {
         }
     },
     pyrefly = {},
+    neocmake = {},
 }
 
 local ensure_installed = vim.tbl_keys(servers or {})
@@ -79,6 +80,6 @@ return {
     },
     opts = {
         ensure_installed = ensure_installed,
-        automatic_enable = false,
+        automatic_enable = true,
     },
 }
