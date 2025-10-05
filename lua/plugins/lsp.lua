@@ -67,7 +67,6 @@ return {
         { "mason-org/mason.nvim", opts = {} },
         {
             "neovim/nvim-lspconfig",
-            dependencies = { "saghen/blink.cmp" },
             config = function()
                 for server, settings in pairs(servers) do
                     settings.capabilities = require("blink.cmp").get_lsp_capabilities(settings.capabilities)
