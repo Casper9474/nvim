@@ -2,7 +2,7 @@ return {
     "saghen/blink.cmp",
     version = "1.*",
     event = { "InsertEnter", "CmdlineEnter" },
-    ---@module 'blink.cmp'
+    ---@module "blink.cmp"
     ---@type blink.cmp.Config
     opts = {
         completion = {
@@ -11,6 +11,7 @@ return {
                     columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } }
                 }
             },
+            documentation = { auto_show = true, treesitter_highlighting = true },
         },
         signature = {
             enabled = true,
@@ -32,7 +33,15 @@ return {
             },
         },
         sources = {
-            min_keyword_length = 2
+            min_keyword_length = 2,
+            default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+            providers = {
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 100,
+                },
+            },
         },
     },
 }
