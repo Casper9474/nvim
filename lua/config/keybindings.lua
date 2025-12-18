@@ -80,5 +80,7 @@ set({ "n", "x" }, "<leader>/", function()
     Snacks.picker.grep()
 end, { desc = "Grep" })
 
+set({ "n", "x" }, "<leader>sH", function() Snacks.picker.highlights() end, { desc = "Highlights" })
+
 set({ "n", "x" }, "<leader>cd", "<cmd>cd %:h<CR>",
     { silent = true, desc = "Change directory to current file" })

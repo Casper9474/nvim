@@ -9,6 +9,8 @@ vim.o.signcolumn = "yes"
 vim.opt.listchars = { nbsp = "+", eol = "↴" }
 vim.o.list = true
 vim.opt.fillchars = { fold = " ", eob = " " }
+vim.o.showmode = false
+vim.o.wrap = false
 
 -- Better search
 vim.o.ignorecase = true
