@@ -84,3 +84,5 @@ set({ "n", "x" }, "<leader>sH", function() Snacks.picker.highlights() end, { des
 
 set({ "n", "x" }, "<leader>cd", "<cmd>cd %:h<CR>",
     { silent = true, desc = "Change directory to current file" })
+
+set({"n", "x"}, "ga", vim.lsp.buf.code_action, {desc = "Code action" })

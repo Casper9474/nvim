@@ -10,9 +10,9 @@ local servers = {
             }
         }
     },
-    pyrefly  = {},
+    ty       = {},
     neocmake = {},
-    clangd = {},
+    clangd   = {},
 }
 
 local ensure_installed = vim.tbl_keys(servers or {})
