@@ -11,14 +11,14 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     build = ":TSUpdate",
     config = function()
-        local configs = require("nvim-treesitter.configs")
-        local install = require("nvim-treesitter.install")
-        configs.setup({
-            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "cpp", "python" },
-            sync_install = false,
-            highlight = { enable = true },
-            indent = { enable = true },
+        local languages = { "c", "lua", "vim", "vimdoc", "query", "cpp", "python" }
+        local treesitter = require("nvim-treesitter")
+        treesitter.install(languages)
+        vim.api.nvim_create_autocmd("FileType", {
+            pattern = languages,
+            callback = function()
+                vim.treesitter.start()
+            end
         })
-        install.compilers = { "zig", "cc", "gcc", "clang", "cl" }
     end
 }
