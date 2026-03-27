@@ -1,4 +1,5 @@
 local set = vim.keymap.set
+local del = vim.keymap.del
 local function cmd(opts)
     local ok, err = pcall(vim.api.nvim_cmd, opts, {})
     if not ok then
@@ -86,3 +87,10 @@ set({ "n", "x" }, "<leader>cd", "<cmd>cd %:h<CR>",
     { silent = true, desc = "Change directory to current file" })
 
 set({"n", "x"}, "ga", vim.lsp.buf.code_action, {desc = "Code action" })
+
+del("n", "grn")
+del({"n", "x"}, "gra")
+del("n", "grr")
+del("n", "gri")
+del("n", "grt")
+del("n", "gO")
