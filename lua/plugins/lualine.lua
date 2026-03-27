@@ -9,7 +9,11 @@ return {
             lualine_a = { "buffers" },
         },
         sections = {
-            lualine_x = { "encoding", "filetype" },
+            lualine_x = {
+                { "lsp_status", icon = "", symbols = { done = "", separator = "" }, show_name = false },
+                "encoding",
+                "filetype"
+            },
             lualine_y = { "progress" },
             lualine_z = { "location" }
         }
