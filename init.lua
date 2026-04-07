@@ -129,6 +129,8 @@ local servers = {
     clangd = {},
     ty = {},
     neocmake = {},
+    svelte = {},
+    vtsls = {},
 }
 
 vim.lsp.inlay_hint.enable(true)
