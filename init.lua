@@ -157,6 +157,7 @@ end
 
 vim.diagnostic.config({ jump = { on_jump = on_jump } })
 
+vim.keymap.set({ "n", "x" }, "<Leader>r", vim.lsp.buf.rename, { desc = "Rename symbol under cursor", silent = true })
 
 -- Formatter -----------------------------------------------------------------------------------------------------------
 
@@ -205,7 +206,8 @@ vim.keymap.set({ "n", "x" }, "<Leader>sk", function() require("fzf-lua").keymaps
 vim.keymap.set({ "n", "x" }, "gd", function()
     require("fzf-lua").lsp_definitions()
 end, { silent = true, desc = "Goto Definition" })
-vim.keymap.set({"n","x"}, "gi", function() require("fzf-lua").lsp_implementations() end, { silent = true, desc = "Goto Implementation" })
+vim.keymap.set({ "n", "x" }, "gi", function() require("fzf-lua").lsp_implementations() end,
+    { silent = true, desc = "Goto Implementation" })
 
 -- Cmp -----------------------------------------------------------------------------------------------------------------
 require("blink.cmp").setup({
@@ -222,4 +224,3 @@ require("blink.cmp").setup({
         min_keyword_length = 2,
     },
 })
-
