@@ -59,6 +59,19 @@ vim.api.nvim_create_user_command("AlignHeaders", function()
     vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
 end, {})
 
+vim.api.nvim_create_user_command("VimPackClean", function()
+    local inactive_plugins = vim.iter(vim.pack.get())
+        :filter(function(x) return not x.active end)
+        :map(function(x) return x.spec.name end)
+        :totable()
+
+    vim.notify("Attempting to delete inactive plugins: \n" .. table.concat(inactive_plugins, "\n"))
+    if not pcall(vim.pack.del, inactive_plugins) then
+        vim.notify("Failed to delete inactive plugins...")
+    end
+end, {})
+
+
 -- Plugins -------------------------------------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd("PackChanged", {
