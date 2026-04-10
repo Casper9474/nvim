@@ -91,8 +91,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 local gh = function(x) return "https://github.com/" .. x end
 vim.pack.add({
     gh("EdenEast/nightfox.nvim"),
+    gh("rebelot/kanagawa.nvim"),
     gh("nvim-tree/nvim-web-devicons"),
     gh("hiphish/rainbow-delimiters.nvim"),
+    gh("lukas-reineke/indent-blankline.nvim"),
     gh("nvim-treesitter/nvim-treesitter"),
     gh("mason-org/mason-lspconfig.nvim"),
     gh("mason-org/mason.nvim"),
@@ -103,11 +105,13 @@ vim.pack.add({
     gh("ibhagwan/fzf-lua"),
     gh("rafamadriz/friendly-snippets"),
     gh("saghen/blink.cmp"),
+    gh("github/copilot.vim"),
 })
 
 -- Colorscheme ---------------------------------------------------------------------------------------------------------
 
-vim.cmd.colorscheme("nightfox")
+vim.cmd.colorscheme("kanagawa")
+require("ibl").setup({})
 
 
 -- Treesitter ----------------------------------------------------------------------------------------------------------
