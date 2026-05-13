@@ -1,6 +1,9 @@
 -- Opts ----------------------------------------------------------------------------------------------------------------
 
 vim.loader.enable(true)
+require('vim._core.ui2').enable({
+    enable = true,
+})
 
 vim.g.mapleader = " "
 vim.o.undofile = true
@@ -33,9 +36,11 @@ vim.opt.expandtab = true
 
 vim.o.formatoptions = "qjl1"
 
+vim.o.undofile = true
+
 -- Keymap --------------------------------------------------------------------------------------------------------------
 
-vim.keymap.set({ "n", "x" }, "<Esc>", "<CMD>noh<CR>", { silent = true })
+vim.keymap.set({ "n", "x" }, "<Esc>", "<CMD>noh<CR><Esc>", { silent = true })
 
 -- Autocmds ------------------------------------------------------------------------------------------------------------
 
@@ -71,6 +76,17 @@ vim.api.nvim_create_user_command("VimPackClean", function()
     end
 end, {})
 
+vim.api.nvim_create_user_command("VimPackUpdate", function()
+    local plugins = vim.iter(vim.pack.get())
+        :filter(function(x) return x.active end)
+        :map(function(x) return x.spec.name end)
+        :totable()
+
+    vim.notify("Attempting to update active plugins: \n" .. table.concat(plugins, "\n"))
+    if not pcall(vim.pack.update, plugins) then
+        vim.notify("Failed to update active plugins...")
+    end
+end, {})
 
 -- Plugins -------------------------------------------------------------------------------------------------------------
 
@@ -81,17 +97,12 @@ vim.api.nvim_create_autocmd("PackChanged", {
             if not ev.data.active then vim.cmd.packadd("nvim-treesitter") end
             vim.cmd("TSUpdate")
         end
-        if name == "blink.cmp" and kind == "update" then
-            if not ev.data.active then vim.cmd.packadd("blink.cmp") end
-            vim.cmd("BlinkCmp build")
-        end
     end
 })
 
 local gh = function(x) return "https://github.com/" .. x end
 vim.pack.add({
-    gh("EdenEast/nightfox.nvim"),
-    gh("rebelot/kanagawa.nvim"),
+    gh("ofirgall/ofirkai.nvim"),
     gh("nvim-tree/nvim-web-devicons"),
     gh("hiphish/rainbow-delimiters.nvim"),
     gh("lukas-reineke/indent-blankline.nvim"),
@@ -104,15 +115,23 @@ vim.pack.add({
     gh("stevearc/oil.nvim"),
     gh("ibhagwan/fzf-lua"),
     gh("rafamadriz/friendly-snippets"),
+    gh("saghen/blink.lib"),
     gh("saghen/blink.cmp"),
     gh("github/copilot.vim"),
 })
 
 -- Colorscheme ---------------------------------------------------------------------------------------------------------
 
-vim.cmd.colorscheme("kanagawa")
-require("ibl").setup({})
-
+vim.cmd.colorscheme("ofirkai")
+require("ibl").setup({
+    scope = {
+        show_start = false,
+        show_end = false,
+    },
+    indent = {
+        char = "▏",
+    }
+})
 
 -- Treesitter ----------------------------------------------------------------------------------------------------------
 
@@ -199,7 +218,8 @@ require("lualine").setup({
     options = {
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
-    }
+    },
+    extensions = { "oil", "fzf", "mason", },
 })
 
 -- File explorer -------------------------------------------------------------------------------------------------------
@@ -207,9 +227,13 @@ require("lualine").setup({
 require("oil").setup()
 vim.keymap.set({ "n", "x" }, "-", "<CMD>Oil<CR>", { silent = true, desc = "Open oil" })
 
-require("fzf-lua").setup({})
+require("fzf-lua").setup({
+    -- fzf_bin = "sk",
+})
 vim.keymap.set({ "n", "x" }, "<Leader>ff", function() require("fzf-lua").files() end,
     { silent = true, desc = "Open file picker" })
+vim.keymap.set({ "n", "x" }, "<Leader>fc", function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end,
+    { silent = true, desc = "Open config file picker" })
 vim.keymap.set({ "n", "x" }, "<Leader>fb", function() require("fzf-lua").buffers() end,
     { silent = true, desc = "Open buffer picker" })
 vim.keymap.set({ "n", "x" }, "<Leader>/", function() require("fzf-lua").live_grep() end,
@@ -227,6 +251,9 @@ vim.keymap.set({ "n", "x" }, "gi", function() require("fzf-lua").lsp_implementat
     { silent = true, desc = "Goto Implementation" })
 
 -- Cmp -----------------------------------------------------------------------------------------------------------------
+
+require("blink.cmp").build():wait(60000)
+
 require("blink.cmp").setup({
     cmdline = {
         completion = {
