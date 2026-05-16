@@ -105,7 +105,7 @@ vim.pack.add({
     gh("ofirgall/ofirkai.nvim"),
     gh("nvim-tree/nvim-web-devicons"),
     gh("hiphish/rainbow-delimiters.nvim"),
-    gh("lukas-reineke/indent-blankline.nvim"),
+    gh("nvimdev/indentmini.nvim"),
     gh("nvim-treesitter/nvim-treesitter"),
     gh("mason-org/mason-lspconfig.nvim"),
     gh("mason-org/mason.nvim"),
@@ -123,15 +123,9 @@ vim.pack.add({
 -- Colorscheme ---------------------------------------------------------------------------------------------------------
 
 vim.cmd.colorscheme("ofirkai")
-require("ibl").setup({
-    scope = {
-        show_start = false,
-        show_end = false,
-    },
-    indent = {
-        char = "▏",
-    }
-})
+vim.cmd.highlight('IndentLine guifg=#717475')
+vim.cmd.highlight('IndentLineCurrent guifg=#e3a1db')
+require("indentmini").setup({})
 
 -- Treesitter ----------------------------------------------------------------------------------------------------------
 
