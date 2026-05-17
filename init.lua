@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
     end
 })
 
-local gh = function(x) return "https://github.com/" .. x end
+local gh = function(pack) return "https://github.com/" .. pack end
 vim.pack.add({
     gh("ofirgall/ofirkai.nvim"),
     gh("nvim-tree/nvim-web-devicons"),
@@ -157,7 +157,7 @@ local servers = {
         }
     },
     clangd = {},
-    ty = {},
+    pyrefly = {},
     neocmake = {},
     svelte = {},
     vtsls = {},
