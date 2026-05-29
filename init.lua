@@ -113,7 +113,7 @@ vim.pack.add({
     gh("stevearc/conform.nvim"),
     gh("nvim-lualine/lualine.nvim"),
     gh("stevearc/oil.nvim"),
-    gh("ibhagwan/fzf-lua"),
+    gh("folke/snacks.nvim"),
     gh("rafamadriz/friendly-snippets"),
     gh("saghen/blink.lib"),
     gh("saghen/blink.cmp"),
@@ -213,7 +213,7 @@ require("lualine").setup({
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
     },
-    extensions = { "oil", "fzf", "mason", },
+    extensions = { "oil", "snacks", "mason", },
 })
 
 -- File explorer -------------------------------------------------------------------------------------------------------
@@ -221,33 +221,30 @@ require("lualine").setup({
 require("oil").setup()
 vim.keymap.set({ "n", "x" }, "-", "<CMD>Oil<CR>", { silent = true, desc = "Open oil" })
 
-require("fzf-lua").setup({
-    files = {
-        git_icons = false,
-    },
-    grep = {
-        git_icons = false,
-    },
+require("snacks").setup({
+    picker = { enabled = true },
 })
-vim.keymap.set({ "n", "x" }, "<Leader>ff", function() require("fzf-lua").files() end,
-    { silent = true, desc = "Open file picker" })
-vim.keymap.set({ "n", "x" }, "<Leader>fc", function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end,
-    { silent = true, desc = "Open config file picker" })
-vim.keymap.set({ "n", "x" }, "<Leader>fb", function() require("fzf-lua").buffers() end,
-    { silent = true, desc = "Open buffer picker" })
-vim.keymap.set({ "n", "x" }, "<Leader>/", function() require("fzf-lua").live_grep() end,
-    { silent = true, desc = "Open live grep" })
-vim.keymap.set({ "n", "x" }, "<Leader>fr", function() require("fzf-lua").lsp_references() end,
-    { silent = true, desc = "Find references" })
-vim.keymap.set({ "n", "x" }, "<Leader>ca", function() require("fzf-lua").lsp_code_actions() end,
-    { silent = true, desc = "Code actions" })
-vim.keymap.set({ "n", "x" }, "<Leader>sk", function() require("fzf-lua").keymaps() end,
-    { silent = true, desc = "Show keybidings" })
+
+local Snacks = require("snacks")
+vim.keymap.set({ "n", "x" }, "<Leader>ff", function() Snacks.picker.files() end,
+    { desc = "Open file picker" })
+vim.keymap.set({ "n", "x" }, "<Leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end,
+    { desc = "Open config file picker" })
+vim.keymap.set({ "n", "x" }, "<Leader>fb", function() Snacks.picker.buffers() end,
+    { desc = "Open buffer picker" })
+vim.keymap.set({ "n", "x" }, "<Leader>/", function() Snacks.picker.grep() end,
+    { desc = "Open live grep" })
+vim.keymap.set({ "n", "x" }, "<Leader>fr", function() Snacks.picker.lsp_references() end,
+    { desc = "Find references" })
+vim.keymap.set({ "n", "x" }, "<Leader>ca", function() vim.lsp.buf.code_action() end,
+    { desc = "Code actions" })
+vim.keymap.set({ "n", "x" }, "<Leader>sk", function() Snacks.picker.keymaps() end,
+    { desc = "Show keybidings" })
 vim.keymap.set({ "n", "x" }, "gd", function()
-    require("fzf-lua").lsp_definitions()
-end, { silent = true, desc = "Goto Definition" })
-vim.keymap.set({ "n", "x" }, "gi", function() require("fzf-lua").lsp_implementations() end,
-    { silent = true, desc = "Goto Implementation" })
+    Snacks.picker.lsp_definitions()
+end, { desc = "Goto Definition" })
+vim.keymap.set({ "n", "x" }, "gi", function() Snacks.picker.lsp_implementations() end,
+    { desc = "Goto Implementation" })
 
 -- Cmp -----------------------------------------------------------------------------------------------------------------
 
