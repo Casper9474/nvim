@@ -22,6 +22,7 @@ vim.o.splitbelow = true
 
 vim.o.signcolumn = "yes"
 vim.o.fillchars = "eob: "
+vim.o.showmode = false
 
 vim.o.ignorecase = true
 vim.o.incsearch = true
