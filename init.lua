@@ -127,6 +127,13 @@ vim.cmd.highlight('IndentLine guifg=#717475')
 vim.cmd.highlight('IndentLineCurrent guifg=#e3a1db')
 require("indentmini").setup({})
 
+-- Snacks -------------------------------------------------------------------------------------------------------------
+
+require("snacks").setup({
+    picker = { enabled = true },
+    words = { enabled = true },
+})
+
 -- Treesitter ----------------------------------------------------------------------------------------------------------
 
 local treesitter = { "cpp", "lua", "html", "vim", "c_sharp", "css", "tsx", "svelte", "go", "rust", "zig", "javascript",
@@ -220,10 +227,6 @@ require("lualine").setup({
 
 require("oil").setup()
 vim.keymap.set({ "n", "x" }, "-", "<CMD>Oil<CR>", { silent = true, desc = "Open oil" })
-
-require("snacks").setup({
-    picker = { enabled = true },
-})
 
 local Snacks = require("snacks")
 vim.keymap.set({ "n", "x" }, "<Leader>ff", function() Snacks.picker.files() end,
