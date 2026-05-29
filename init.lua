@@ -222,7 +222,12 @@ require("oil").setup()
 vim.keymap.set({ "n", "x" }, "-", "<CMD>Oil<CR>", { silent = true, desc = "Open oil" })
 
 require("fzf-lua").setup({
-    -- fzf_bin = "sk",
+    files = {
+        git_icons = false,
+    },
+    grep = {
+        git_icons = false,
+    },
 })
 vim.keymap.set({ "n", "x" }, "<Leader>ff", function() require("fzf-lua").files() end,
     { silent = true, desc = "Open file picker" })
