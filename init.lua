@@ -220,7 +220,7 @@ require("lualine").setup({
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
     },
-    extensions = { "oil", "snacks", "mason", },
+    extensions = { "oil", "fzf", "mason", },
 })
 
 -- File explorer -------------------------------------------------------------------------------------------------------
