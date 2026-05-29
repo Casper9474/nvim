@@ -103,7 +103,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 local gh = function(pack) return "https://github.com/" .. pack end
 vim.pack.add({
-    gh("ofirgall/ofirkai.nvim"),
+    gh("junegunn/seoul256.vim"),
     gh("nvim-tree/nvim-web-devicons"),
     gh("hiphish/rainbow-delimiters.nvim"),
     gh("nvimdev/indentmini.nvim"),
@@ -123,7 +123,9 @@ vim.pack.add({
 
 -- Colorscheme ---------------------------------------------------------------------------------------------------------
 
-vim.cmd.colorscheme("ofirkai")
+-- vim.cmd.colorscheme("ofirkai")
+vim.g.seoul256_background = 235
+vim.cmd.colorscheme("seoul256")
 vim.cmd.highlight('IndentLine guifg=#717475')
 vim.cmd.highlight('IndentLineCurrent guifg=#e3a1db')
 require("indentmini").setup({})
