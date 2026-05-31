@@ -30,10 +30,10 @@ vim.o.infercase = true
 vim.o.smartcase = true
 
 vim.o.smartindent = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.expandtab = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.expandtab = true
 
 vim.o.formatoptions = "qjl1"
 
@@ -246,9 +246,8 @@ vim.keymap.set({ "n", "x" }, "<Leader>ca", function() vim.lsp.buf.code_action() 
     { desc = "Code actions" })
 vim.keymap.set({ "n", "x" }, "<Leader>sk", function() Snacks.picker.keymaps() end,
     { desc = "Show keybidings" })
-vim.keymap.set({ "n", "x" }, "gd", function()
-    Snacks.picker.lsp_definitions()
-end, { desc = "Goto Definition" })
+vim.keymap.set({ "n", "x" }, "gd", function() Snacks.picker.lsp_definitions() end,
+    { desc = "Goto Definition" })
 vim.keymap.set({ "n", "x" }, "gi", function() Snacks.picker.lsp_implementations() end,
     { desc = "Goto Implementation" })
 
