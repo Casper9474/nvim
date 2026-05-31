@@ -255,7 +255,7 @@ vim.keymap.set({ "n", "x" }, "gi", function() Snacks.picker.lsp_implementations(
 
 -- Cmp -----------------------------------------------------------------------------------------------------------------
 
-require("blink.cmp").build():wait(60000)
+require("blink.cmp").build():pwait()
 
 require("blink.cmp").setup({
     cmdline = {
