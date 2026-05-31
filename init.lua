@@ -39,10 +39,6 @@ vim.o.formatoptions = "qjl1"
 
 vim.o.undofile = true
 
--- Keymap --------------------------------------------------------------------------------------------------------------
-
-vim.keymap.set({ "n", "x" }, "<Esc>", "<CMD>noh<CR><Esc>", { silent = true })
-
 -- Autocmds ------------------------------------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -107,6 +103,7 @@ vim.pack.add({
     gh("nvim-tree/nvim-web-devicons"),
     gh("hiphish/rainbow-delimiters.nvim"),
     gh("nvimdev/indentmini.nvim"),
+    gh("jiaoshijie/undotree"),
     gh("nvim-treesitter/nvim-treesitter"),
     gh("mason-org/mason-lspconfig.nvim"),
     gh("mason-org/mason.nvim"),
@@ -120,6 +117,11 @@ vim.pack.add({
     gh("saghen/blink.cmp"),
     gh("github/copilot.vim"),
 })
+
+-- Keymap --------------------------------------------------------------------------------------------------------------
+
+vim.keymap.set({ "n", "x" }, "<Esc>", "<CMD>noh<CR><Esc>", { silent = true })
+vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
 
 -- Colorscheme ---------------------------------------------------------------------------------------------------------
 
