@@ -238,6 +238,8 @@ vim.keymap.set({ "n", "x" }, "<Leader>fc", function() Snacks.picker.files({ cwd 
     { desc = "Open config file picker" })
 vim.keymap.set({ "n", "x" }, "<Leader>fb", function() Snacks.picker.buffers() end,
     { desc = "Open buffer picker" })
+vim.keymap.set({ "n", "x" }, "<Leader>fs", function() Snacks.picker.lsp_symbols() end,
+    { desc = "Open lsp symbols" })
 vim.keymap.set({ "n", "x" }, "<Leader>/", function() Snacks.picker.grep() end,
     { desc = "Open live grep" })
 vim.keymap.set({ "n", "x" }, "<Leader>fr", function() Snacks.picker.lsp_references() end,
