@@ -39,6 +39,8 @@ vim.o.formatoptions = "qjl1"
 
 vim.o.undofile = true
 
+vim.g["conjure#mapping#doc_word"] = "gk"
+
 -- Autocmds ------------------------------------------------------------------------------------------------------------
 
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -116,6 +118,7 @@ vim.pack.add({
     gh("saghen/blink.lib"),
     gh("saghen/blink.cmp"),
     gh("github/copilot.vim"),
+    gh("Olical/conjure"),
 })
 
 -- Keymap --------------------------------------------------------------------------------------------------------------
