@@ -1,7 +1,7 @@
 -- Opts ----------------------------------------------------------------------------------------------------------------
 
 vim.loader.enable(true)
-require('vim._core.ui2').enable({
+require("vim._core.ui2").enable({
     enable = true,
 })
 
@@ -101,7 +101,7 @@ vim.api.nvim_create_autocmd("PackChanged", {
 
 local gh = function(pack) return "https://github.com/" .. pack end
 vim.pack.add({
-    gh("scottmckendry/cyberdream.nvim"),
+    gh("rebelot/kanagawa.nvim"),
     gh("nvim-tree/nvim-web-devicons"),
     gh("hiphish/rainbow-delimiters.nvim"),
     gh("nvimdev/indentmini.nvim"),
@@ -124,13 +124,24 @@ vim.pack.add({
 -- Keymap --------------------------------------------------------------------------------------------------------------
 
 vim.keymap.set({ "n", "x" }, "<Esc>", "<CMD>noh<CR><Esc>", { silent = true })
-vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>u", require("undotree").toggle, { noremap = true, silent = true })
 
 -- Colorscheme ---------------------------------------------------------------------------------------------------------
 
-vim.cmd.colorscheme("cyberdream")
-vim.cmd.highlight('IndentLine guifg=#717475')
-vim.cmd.highlight('IndentLineCurrent guifg=#e3a1db')
+require("kanagawa").setup({
+    colors = {
+        theme = {
+            all = {
+                ui = {
+                    bg_gutter = "none"
+                }
+            }
+        }
+    }
+})
+vim.cmd.colorscheme("kanagawa")
+vim.cmd.highlight("IndentLine guifg=#717475")
+vim.cmd.highlight("IndentLineCurrent guifg=#e3a1db")
 require("indentmini").setup({})
 
 -- Snacks -------------------------------------------------------------------------------------------------------------
@@ -245,7 +256,7 @@ vim.keymap.set({ "n", "x" }, "<Leader>fs", function() Snacks.picker.lsp_symbols(
     { desc = "Open lsp symbols" })
 vim.keymap.set({ "n", "x" }, "<Leader>/", function() Snacks.picker.grep() end,
     { desc = "Open live grep" })
-vim.keymap.set({ "n", "x" }, "<Leader>fr", function() Snacks.picker.lsp_references() end,
+vim.keymap.set({ "n", "x" }, "gr", function() Snacks.picker.lsp_references() end,
     { desc = "Find references" })
 vim.keymap.set({ "n", "x" }, "<Leader>ca", function() vim.lsp.buf.code_action() end,
     { desc = "Code actions" })
