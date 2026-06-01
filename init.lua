@@ -6,6 +6,7 @@ require("vim._core.ui2").enable({
 })
 
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.o.undofile = true
 vim.o.mouse = "a"
 vim.opt.timeoutlen = 300
