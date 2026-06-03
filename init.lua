@@ -181,7 +181,9 @@ local servers = {
             }
         }
     },
-    clangd = {},
+    clangd = {
+        cmd = { "clangd", "--background-index", "--suggest-missing-includes", "--clang-tidy" },
+    },
     pyrefly = {},
     neocmake = {},
     svelte = {},
