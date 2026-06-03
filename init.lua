@@ -6,10 +6,10 @@ require("vim._core.ui2").enable({
 })
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = ","
 vim.o.undofile = true
 vim.o.mouse = "a"
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 500
 
 vim.o.breakindent = true
 vim.o.linebreak = true
