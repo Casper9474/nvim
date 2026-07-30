@@ -1,290 +1,119 @@
--- Opts ----------------------------------------------------------------------------------------------------------------
+-- 0. Pack
 
-vim.loader.enable(true)
-require("vim._core.ui2").enable({
-    enable = true,
-})
+local hooks = function(ev)
+    -- Use available |event-data|
+    local name, kind = ev.data.spec.name, ev.data.kind
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = ","
-vim.o.undofile = true
-vim.o.mouse = "a"
-vim.opt.timeoutlen = 500
+    -- Run build script after plugin's code has changed
+    if name == 'nvim-treesitter' and (kind == 'install' or kind == 'update') then
+        if not ev.data.active then
+            vim.cmd.packadd('nvim-treesitter')
+        end
+        vim.cmd('TSUpdate')
+    end
+end
 
-vim.o.breakindent = true
-vim.o.linebreak = true
-vim.o.scrolloff = 5
+vim.api.nvim_create_autocmd('PackChanged', { callback = hooks })
 
+vim.pack.add({ 'https://github.com/nvim-treesitter/nvim-treesitter' })
+vim.pack.add({ 'https://github.com/ellisonleao/gruvbox.nvim' })
+
+-- 1. Colorscheme
+vim.cmd.colorscheme('gruvbox')
+
+require('nvim-treesitter').install { 'lua', 'cpp', 'c' }
+
+-- 2. Options
 vim.o.number = true
 vim.o.relativenumber = true
 
-vim.o.splitright = true
-vim.o.splitbelow = true
-
-vim.o.signcolumn = "yes"
-vim.o.fillchars = "eob: "
-vim.o.showmode = false
-
-vim.o.ignorecase = true
-vim.o.incsearch = true
-vim.o.infercase = true
-vim.o.smartcase = true
+vim.o.expandtab = true
+vim.o.tabstop = 4
+vim.o.shiftwidth = 0
+vim.o.softtabstop = -1
 
 vim.o.smartindent = true
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
-vim.o.softtabstop = 4
-vim.o.expandtab = true
 
-vim.o.formatoptions = "qjl1"
+vim.o.ignorecase = true
+vim.o.smartcase = true
 
 vim.o.undofile = true
+vim.o.signcolumn = 'yes'
 
-vim.g["conjure#mapping#doc_word"] = "gk"
+vim.o.completeopt = { 'menuone', 'noselect', 'popup' }
+vim.o.autocomplete = true
 
--- Autocmds ------------------------------------------------------------------------------------------------------------
+-- 3. Lsp
+vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
 
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.hl.on_yank()
-    end
-})
-
--- Utils ---------------------------------------------------------------------------------------------------------------
-
-vim.api.nvim_create_user_command("AlignHeaders", function()
-    local width = 120
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    for i, line in ipairs(lines) do
-        local title = line:match("^%-%- (.-) %-+$")
-        if title then
-            lines[i] = "-- " .. title .. " " .. string.rep("-", width - #title - 4)
-        end
-    end
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
-end, {})
-
-vim.api.nvim_create_user_command("VimPackClean", function()
-    local inactive_plugins = vim.iter(vim.pack.get())
-        :filter(function(x) return not x.active end)
-        :map(function(x) return x.spec.name end)
-        :totable()
-
-    vim.notify("Attempting to delete inactive plugins: \n" .. table.concat(inactive_plugins, "\n"))
-    if not pcall(vim.pack.del, inactive_plugins) then
-        vim.notify("Failed to delete inactive plugins...")
-    end
-end, {})
-
-vim.api.nvim_create_user_command("VimPackUpdate", function()
-    local plugins = vim.iter(vim.pack.get())
-        :filter(function(x) return x.active end)
-        :map(function(x) return x.spec.name end)
-        :totable()
-
-    vim.notify("Attempting to update active plugins: \n" .. table.concat(plugins, "\n"))
-    if not pcall(vim.pack.update, plugins) then
-        vim.notify("Failed to update active plugins...")
-    end
-end, {})
-
--- Plugins -------------------------------------------------------------------------------------------------------------
-
-vim.api.nvim_create_autocmd("PackChanged", {
-    callback = function(ev)
-        local name, kind = ev.data.spec.name, ev.data.kind
-        if name == "nvim-treesitter" and kind == "update" then
-            if not ev.data.active then vim.cmd.packadd("nvim-treesitter") end
-            vim.cmd("TSUpdate")
-        end
-    end
-})
-
-local gh = function(pack) return "https://github.com/" .. pack end
-vim.pack.add({
-    gh("rebelot/kanagawa.nvim"),
-    gh("nvim-tree/nvim-web-devicons"),
-    gh("hiphish/rainbow-delimiters.nvim"),
-    gh("nvimdev/indentmini.nvim"),
-    gh("jiaoshijie/undotree"),
-    gh("nvim-treesitter/nvim-treesitter"),
-    gh("mason-org/mason-lspconfig.nvim"),
-    gh("mason-org/mason.nvim"),
-    gh("neovim/nvim-lspconfig"),
-    gh("stevearc/conform.nvim"),
-    gh("nvim-lualine/lualine.nvim"),
-    gh("stevearc/oil.nvim"),
-    gh("folke/snacks.nvim"),
-    gh("rafamadriz/friendly-snippets"),
-    gh("saghen/blink.lib"),
-    gh("saghen/blink.cmp"),
-    gh("github/copilot.vim"),
-    gh("Olical/conjure"),
-})
-
--- Keymap --------------------------------------------------------------------------------------------------------------
-
-vim.keymap.set({ "n", "x" }, "<Esc>", "<CMD>noh<CR><Esc>", { silent = true })
-vim.keymap.set("n", "<leader>u", require("undotree").toggle, { noremap = true, silent = true })
-
--- Colorscheme ---------------------------------------------------------------------------------------------------------
-
-require("kanagawa").setup({
-    colors = {
-        theme = {
-            all = {
-                ui = {
-                    bg_gutter = "none"
-                }
-            }
-        }
-    }
-})
-vim.cmd.colorscheme("kanagawa")
-vim.cmd.highlight("IndentLine guifg=#717475")
-vim.cmd.highlight("IndentLineCurrent guifg=#e3a1db")
-require("indentmini").setup({})
-
--- Snacks -------------------------------------------------------------------------------------------------------------
-
-require("snacks").setup({
-    picker = { enabled = true },
-    words = { enabled = true },
-})
-
--- Treesitter ----------------------------------------------------------------------------------------------------------
-
-local treesitter = { "cpp", "lua", "html", "vim", "c_sharp", "css", "tsx", "svelte", "go", "rust", "zig", "javascript",
-    "java", "c", "json" }
-
-require("nvim-treesitter").install(treesitter)
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = treesitter,
-    callback = function()
-        vim.treesitter.start()
-    end,
-})
-
--- Lsp -----------------------------------------------------------------------------------------------------------------
-
-local servers = {
+local lsp_servers = {
     lua_ls = {
-        settings = {
-            Lua = {
+        on_init = function(client)
+            if client.workspace_folders then
+                local path = client.workspace_folders[1].name
+                if
+                    path ~= vim.fn.stdpath('config')
+                    and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                then
+                    return
+                end
+            end
+
+            client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                runtime = {
+                    version = 'LuaJIT',
+                    path = {
+                        'lua/?.lua',
+                        'lua/?/init.lua',
+                    }
+                },
                 workspace = {
+                    checkThirdParty = false,
                     library = {
                         vim.env.VIMRUNTIME,
+                        vim.api.nvim_get_runtime_file('lua/lspconfig', false)[1],
                     },
-                    checkThirdParty = false
-                }
-            }
+                },
+            })
+        end,
+        settings = {
+            Lua = {}
         }
     },
     clangd = {
-        cmd = { "clangd", "--background-index", "--suggest-missing-includes", "--clang-tidy" },
-    },
-    pyrefly = {},
-    neocmake = {},
-    svelte = {},
-    vtsls = {},
+    }
 }
 
-vim.lsp.inlay_hint.enable(true)
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-    ensure_installed = vim.tbl_keys(servers)
-})
-for server, settings in pairs(servers) do
-    vim.lsp.config(server, settings)
+for lsp_name, lsp_config in pairs(lsp_servers) do
+    vim.lsp.config(lsp_name, lsp_config)
+    vim.lsp.enable(lsp_name)
 end
 
---- @param diagnostic? vim.Diagnostic
---- @param bufnr integer
-local function on_jump(diagnostic, bufnr)
-    if not diagnostic then return end
-    vim.diagnostic.show(
-        diagnostic.namespace,
-        bufnr,
-        { diagnostic },
-        { virtual_lines = { current_line = true }, virtual_text = false }
-    )
-end
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('my.lsp'),
+    callback = function(ev)
+        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
 
-vim.diagnostic.config({ jump = { on_jump = on_jump } })
+        -- Enable auto-completion. Note: Use CTRL-Y to select an item. |complete_CTRL-Y|
+        if client:supports_method('textDocument/completion') then
+            -- Optional: trigger autocompletion on EVERY keypress. May be slow!
+            -- local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
+            -- client.server_capabilities.completionProvider.triggerCharacters = chars
 
-vim.keymap.set({ "n", "x" }, "<Leader>r", vim.lsp.buf.rename, { desc = "Rename symbol under cursor", silent = true })
+            vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+        end
 
--- Formatter -----------------------------------------------------------------------------------------------------------
-
-require("conform").setup()
-vim.api.nvim_create_user_command("Format", function(args)
-    local range = nil
-    if args.count ~= -1 then
-        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
-        range = {
-            start = { args.line1, 0 },
-            ["end"] = { args.line2, end_line:len() },
-        }
-    end
-    require("conform").format({ async = true, lsp_format = "fallback", range = range })
-end, { range = true })
-
-vim.keymap.set({ "n", "x" }, "<Leader>=", "<CMD>Format<CR>", { silent = true, desc = "Format current buffer" })
-
--- Lualine -------------------------------------------------------------------------------------------------------------
-
-require("lualine").setup({
-    options = {
-        component_separators = { left = "", right = "" },
-        section_separators = { left = "", right = "" },
-    },
-    extensions = { "oil", "fzf", "mason", },
-})
-
--- File explorer -------------------------------------------------------------------------------------------------------
-
-require("oil").setup()
-vim.keymap.set({ "n", "x" }, "-", "<CMD>Oil<CR>", { silent = true, desc = "Open oil" })
-
-local Snacks = require("snacks")
-vim.keymap.set({ "n", "x" }, "<Leader>ff", function() Snacks.picker.files() end,
-    { desc = "Open file picker" })
-vim.keymap.set({ "n", "x" }, "<Leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end,
-    { desc = "Open config file picker" })
-vim.keymap.set({ "n", "x" }, "<Leader>fb", function() Snacks.picker.buffers() end,
-    { desc = "Open buffer picker" })
-vim.keymap.set({ "n", "x" }, "<Leader>fs", function() Snacks.picker.lsp_symbols() end,
-    { desc = "Open lsp symbols" })
-vim.keymap.set({ "n", "x" }, "<Leader>/", function() Snacks.picker.grep() end,
-    { desc = "Open live grep" })
-vim.keymap.set({ "n", "x" }, "gr", function() Snacks.picker.lsp_references() end,
-    { desc = "Find references" })
-vim.keymap.set({ "n", "x" }, "<Leader>ca", function() vim.lsp.buf.code_action() end,
-    { desc = "Code actions" })
-vim.keymap.set({ "n", "x" }, "<Leader>sk", function() Snacks.picker.keymaps() end,
-    { desc = "Show keybidings" })
-vim.keymap.set({ "n", "x" }, "gd", function() Snacks.picker.lsp_definitions() end,
-    { desc = "Goto Definition" })
-vim.keymap.set({ "n", "x" }, "gi", function() Snacks.picker.lsp_implementations() end,
-    { desc = "Goto Implementation" })
-
--- Cmp -----------------------------------------------------------------------------------------------------------------
-
-require("blink.cmp").build():pwait()
-
-require("blink.cmp").setup({
-    cmdline = {
-        completion = {
-            menu = {
-                auto_show = function()
-                    return vim.fn.getcmdtype() == ":"
-                end
-            }
-        }
-    },
-    sources = {
-        min_keyword_length = 2,
-    },
+        -- Auto-format ("lint") on save.
+        -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
+        if not client:supports_method('textDocument/willSaveWaitUntil')
+            and client:supports_method('textDocument/formatting') then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+                group = vim.api.nvim_create_augroup('my.lsp', { clear = false }),
+                buffer = ev.buf,
+                callback = function()
+                    vim.lsp.buf.format({ bufnr = ev.buf, id = client.id, timeout_ms = 1000 })
+                end,
+            })
+        end
+    end,
 })
