@@ -42,6 +42,8 @@ vim.o.signcolumn = 'yes'
 
 vim.o.completeopt = { 'menuone', 'noinsert', 'popup' }
 vim.o.autocomplete = true
+vim.o.complete = ".,o"
+vim.o.pumheight = 15
 
 vim.keymap.set('n', '<Esc>', '<cmd>noh<cr>')
 
