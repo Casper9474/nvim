@@ -43,6 +43,8 @@ vim.o.signcolumn = 'yes'
 vim.o.completeopt = { 'menuone', 'noinsert', 'popup' }
 vim.o.autocomplete = true
 
+vim.keymap.set('n', '<Esc>', '<cmd>noh<cr>')
+
 -- 3. Lsp
 vim.pack.add({ 'https://github.com/neovim/nvim-lspconfig' })
 
