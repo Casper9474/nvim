@@ -45,6 +45,15 @@ vim.o.autocomplete = true
 vim.o.complete = ".,o"
 vim.o.pumheight = 15
 
+vim.keymap.set('i', '<CR>', function()
+    if vim.fn.pumvisible() == 1 then
+        return '<C-e><CR>'
+    else
+        return '<CR>'
+    end
+end, { expr = true, replace_keycodes = true })
+
+
 vim.keymap.set('n', '<Esc>', '<cmd>noh<cr>')
 
 -- 3. Lsp
