@@ -40,7 +40,7 @@ vim.o.smartcase = true
 vim.o.undofile = true
 vim.o.signcolumn = 'yes'
 
-vim.o.completeopt = { 'menuone', 'noselect', 'popup' }
+vim.o.completeopt = { 'menuone', 'noinsert', 'popup' }
 vim.o.autocomplete = true
 
 -- 3. Lsp
