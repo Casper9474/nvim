@@ -98,6 +98,7 @@ local lsp_servers = {
     clangd = {},
     rust_analyzer = {},
     ty = {},
+    ruff = {},
 }
 
 for lsp_name, lsp_config in pairs(lsp_servers) do
