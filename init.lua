@@ -22,7 +22,7 @@ vim.pack.add({ 'https://github.com/ellisonleao/gruvbox.nvim' })
 vim.cmd.colorscheme('gruvbox')
 
 if vim.fn.executable('tree-sitter') == 1 then
-    require('nvim-treesitter').install { 'lua', 'cpp', 'c' }
+    require('nvim-treesitter').install { 'lua', 'cpp', 'c', 'python' }
 end
 
 -- 2. Options
