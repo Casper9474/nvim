@@ -42,7 +42,7 @@ vim.o.smartcase = true
 vim.o.undofile = true
 vim.o.signcolumn = 'yes'
 
-vim.o.completeopt = { 'menuone', 'noinsert', 'popup' }
+vim.o.completeopt = { 'menuone', 'noinsert', 'popup', 'fuzzy' }
 vim.o.autocomplete = true
 vim.o.complete = ".,o"
 vim.o.pumheight = 15
