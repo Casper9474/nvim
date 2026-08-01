@@ -46,6 +46,7 @@ vim.o.completeopt = { 'menuone', 'noinsert', 'popup', 'fuzzy' }
 vim.o.autocomplete = true
 vim.o.complete = ".,o"
 vim.o.pumheight = 15
+vim.o.winborder = 'single'
 
 vim.keymap.set('i', '<CR>', function()
     if vim.fn.pumvisible() == 1 then
