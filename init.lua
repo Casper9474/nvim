@@ -21,7 +21,9 @@ vim.pack.add({ 'https://github.com/ellisonleao/gruvbox.nvim' })
 -- 1. Colorscheme
 vim.cmd.colorscheme('gruvbox')
 
-require('nvim-treesitter').install { 'lua', 'cpp', 'c' }
+if vim.fn.executable('tree-sitter') == 1 then
+    require('nvim-treesitter').install { 'lua', 'cpp', 'c' }
+end
 
 -- 2. Options
 vim.o.number = true
