@@ -57,6 +57,11 @@ vim.api.nvim_create_autocmd("CmdlineChanged", {
     end
 })
 
+vim.o.findfunc = function(cmdarg, _)
+    local files = vim.fn.glob('**/*', true, true)
+    return vim.fn.matchfuzzy(files, cmdarg)
+end
+
 vim.keymap.set('i', '<CR>', function()
     if vim.fn.pumvisible() == 1 then
         return '<C-e><CR>'
