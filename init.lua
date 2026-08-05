@@ -42,11 +42,20 @@ vim.o.smartcase = true
 vim.o.undofile = true
 vim.o.signcolumn = 'yes'
 
-vim.o.completeopt = { 'menuone', 'noinsert', 'popup', 'fuzzy' }
+vim.opt.completeopt = { 'menuone', 'noinsert', 'popup', 'fuzzy' }
 vim.o.autocomplete = true
-vim.o.complete = ".,o"
+vim.opt.complete = { '.', 'o' }
 vim.o.pumheight = 15
 vim.o.winborder = 'single'
+vim.opt.wildmode = { 'noinsert' }
+
+vim.api.nvim_create_autocmd("CmdlineChanged", {
+    group = vim.api.nvim_create_augroup('my.cmp'),
+    pattern = ':',
+    callback = function()
+        vim.fn.wildtrigger()
+    end
+})
 
 vim.keymap.set('i', '<CR>', function()
     if vim.fn.pumvisible() == 1 then
