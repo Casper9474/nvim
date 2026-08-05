@@ -26,6 +26,8 @@ if vim.fn.executable('tree-sitter') == 1 then
 end
 
 -- 2. Options
+vim.g.mapleader = ' '
+
 vim.o.number = true
 vim.o.relativenumber = true
 
