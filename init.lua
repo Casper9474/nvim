@@ -64,6 +64,15 @@ vim.o.findfunc = function(cmdarg, _)
     return vim.fn.matchfuzzy(files, cmdarg)
 end
 
+vim.keymap.set("n", "<leader>/", function()
+    vim.ui.input({ prompt = "Grep: " }, function(pattern)
+        if pattern then
+            vim.cmd.grep({ args = { pattern }, bang = true, mods = { silent = true } })
+            vim.cmd.copen()
+        end
+    end)
+end, { silent = true })
+
 vim.keymap.set('i', '<CR>', function()
     if vim.fn.pumvisible() == 1 then
         return '<C-e><CR>'
