@@ -1,0 +1,33 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
+      "src": "https://github.com/saghen/blink.cmp",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "friendly-snippets": {
+      "rev": "b2ea5c41a150ba72fb656eedb4ed0a86d138d945",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
+    "fzf-lua": {
+      "rev": "5b88d6f0af7fcb41d4a8bb340bf70d7e3824ee9d",
+      "src": "https://github.com/ibhagwan/fzf-lua"
+    },
+    "lightline.vim": {
+      "rev": "255f61db1a4cc36ee11eb479261d6bc471ed0819",
+      "src": "https://github.com/itchyny/lightline.vim"
+    },
+    "nvim-lspconfig": {
+      "rev": "d8d2fda7aae57030452ce8cd6e770b1eb704514e",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "seoul256.vim": {
+      "rev": "0357ff3e44faab66c98bc98dfc89c834e37012da",
+      "src": "https://github.com/junegunn/seoul256.vim"
+    },
+    "vim-rooter": {
+      "rev": "51402fb77c4d6ae94994e37dc7ca13bec8f4afcc",
+      "src": "https://github.com/airblade/vim-rooter"
+    }
+  }
+}
